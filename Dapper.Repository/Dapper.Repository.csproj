@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>CES IT</Company>
+    <Authors>Rohit Vipin Mathews</Authors>
+    <Description>A simple auto generated CRUD operations library that is a wrapper around Dapper and exposes the Repository interface</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.6" />
+  </ItemGroup>
 
 </Project>
