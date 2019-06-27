@@ -2,11 +2,10 @@
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using CompBioAnalyticsApi.DataAccess.Models;
-using CompBioAnalyticsApi.DataAccess.Repositories.Interfaces;
-using Dapper;
+using Dapper.Repository.Models;
+using Dapper.Repository.Repositories.Interfaces;
 
-namespace CompBioAnalyticsApi.DataAccess.Repositories
+namespace Dapper.Repository.Repositories
 {
     /// <inheritdoc />
     /// <summary>

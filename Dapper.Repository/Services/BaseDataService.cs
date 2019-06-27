@@ -5,14 +5,13 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using CompBioAnalyticsApi.DataAccess.Exceptions;
-using CompBioAnalyticsApi.DataAccess.Extensions;
-using CompBioAnalyticsApi.DataAccess.Models;
-using CompBioAnalyticsApi.DataAccess.Repositories.Interfaces;
-using CompBioAnalyticsApi.DataAccess.Services.Interfaces;
-using Dapper;
+using Dapper.Repository.Exceptions;
+using Dapper.Repository.Extensions;
+using Dapper.Repository.Models;
+using Dapper.Repository.Repositories.Interfaces;
+using Dapper.Repository.Services.Interfaces;
 
-namespace CompBioAnalyticsApi.DataAccess.Services
+namespace Dapper.Repository.Services
 {
     public abstract class BaseDataService<T> : IDataService<T> where T : BaseModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace CompBioAnalyticsApi.DataAccess.Services.Interfaces
+namespace Dapper.Repository.Services.Interfaces
 {
     /// <summary>
     /// Connection factory.

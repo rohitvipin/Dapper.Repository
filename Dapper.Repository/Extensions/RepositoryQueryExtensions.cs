@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using CompBioAnalyticsApi.DataAccess.Models;
-using CompBioAnalyticsApi.DataAccess.Repositories.Interfaces;
-using CommandDefinition = Dapper.CommandDefinition;
+using Dapper.Repository.Models;
+using Dapper.Repository.Repositories.Interfaces;
 
-namespace CompBioAnalyticsApi.DataAccess.Extensions
+namespace Dapper.Repository.Extensions
 {
     /// <summary>
     /// Easy to use extension methods for repository classes

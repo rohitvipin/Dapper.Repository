@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CompBioAnalyticsApi.DataAccess.Models
+namespace Dapper.Repository.Models
 {
     /// <summary>
     /// Base model inherited to all other models

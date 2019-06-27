@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using CompBioAnalyticsApi.DataAccess.Models;
-using Dapper;
+using Dapper.Repository.Models;
 
-namespace CompBioAnalyticsApi.DataAccess.Repositories.Interfaces
+namespace Dapper.Repository.Repositories.Interfaces
 {
     /// <summary>
     /// Base interface for any repository

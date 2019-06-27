@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CompBioAnalyticsApi.DataAccess.Extensions
+namespace Dapper.Repository.Extensions
 {
     public static class ObjectExtensions
     {

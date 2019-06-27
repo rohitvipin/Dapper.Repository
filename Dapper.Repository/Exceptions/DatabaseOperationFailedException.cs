@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CompBioAnalyticsApi.DataAccess.Exceptions
+namespace Dapper.Repository.Exceptions
 {
     /// <summary>
     /// Thrown when a database operation has failed

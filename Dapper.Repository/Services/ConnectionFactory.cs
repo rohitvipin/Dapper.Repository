@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using CompBioAnalyticsApi.DataAccess.Services.Interfaces;
+using Dapper.Repository.Services.Interfaces;
 
-namespace CompBioAnalyticsApi.DataAccess.Services
+namespace Dapper.Repository.Services
 {
     /// <inheritdoc />
     public class ConnectionFactory : IConnectionFactory
@@ -11,7 +11,7 @@ namespace CompBioAnalyticsApi.DataAccess.Services
         private readonly string _connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:CompBioAnalyticsApi.DataAccess.Services.ConnectionFactory"/> class.
+        /// Initializes a new instance of the <see cref="T:Dapper.Repository.Services.ConnectionFactory"/> class.
         /// </summary>
         /// <param name="connectionString">Connection string.</param>
         public ConnectionFactory(string connectionString) => _connectionString = string.IsNullOrWhiteSpace(connectionString)
