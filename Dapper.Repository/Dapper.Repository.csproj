@@ -8,6 +8,8 @@
     <Description>A simple auto generated CRUD operations library that is a wrapper around Dapper and exposes the Repository interface</Description>
     <PackageProjectUrl>https://github.com/rohitvipin/Dapper.Repository</PackageProjectUrl>
     <RepositoryUrl>https://github.com/rohitvipin/Dapper.Repository</RepositoryUrl>
+    <PackageId>Dapper.CRUD.Repository</PackageId>
+    <Product>Dapper.CRUD.Repository</Product>
   </PropertyGroup>
 
   <ItemGroup>
