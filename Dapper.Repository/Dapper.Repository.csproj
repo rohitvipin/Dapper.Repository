@@ -10,6 +10,7 @@
     <RepositoryUrl>https://github.com/rohitvipin/Dapper.Repository</RepositoryUrl>
     <PackageId>Dapper.CRUD.Repository</PackageId>
     <Product>Dapper.CRUD.Repository</Product>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

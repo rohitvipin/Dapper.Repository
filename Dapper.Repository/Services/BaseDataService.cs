@@ -22,11 +22,13 @@ namespace Dapper.Repository.Services
 
         private readonly IRepository<T> _repository;
         private readonly IConnectionFactory _connectionFactory;
+        private readonly int _commandTimeout;
 
-        protected BaseDataService(IRepository<T> repository, IConnectionFactory connectionFactory)
+        protected BaseDataService(IRepository<T> repository, IConnectionFactory connectionFactory, int commandTimeout = 300)
         {
             _repository = repository;
             _connectionFactory = connectionFactory;
+            _commandTimeout = commandTimeout;
         }
 
         private static (DynamicParameters dynamicParameters, StringBuilder queryBuilder) GetUpdateQuery(T input, StringBuilder queryBuilder = null, DynamicParameters dynamicParameters = null, string offset = null)
@@ -128,7 +130,7 @@ namespace Dapper.Repository.Services
                 GetUpdateQuery(item, queryBuilder, dynamicParameters, index.ToString());
             }
 
-            await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction));
+            await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction, _commandTimeout));
         }
 
         private async Task BulkInsertAsync(IList<T> inputs, IDbTransaction transaction)
@@ -141,7 +143,7 @@ namespace Dapper.Repository.Services
                 GetInsertQuery(inputs[index], queryBuilder, dynamicParameters, index.ToString());
             }
 
-            await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction));
+            await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction, _commandTimeout));
         }
 
         protected static StringBuilder GetSelectQueryBuilder()
@@ -175,7 +177,7 @@ namespace Dapper.Repository.Services
                 var dynamicParameters = new DynamicParameters();
                 dynamicParameters.Add(paramName, id);
 
-                return await _repository.QuerySingleAsync(connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters));
+                return await _repository.QuerySingleAsync(connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, commandTimeout: _commandTimeout));
             }
         }
 
@@ -240,14 +242,14 @@ namespace Dapper.Repository.Services
         public virtual async Task<int> UpdateAsync(T input, IDbTransaction transaction)
         {
             var (dynamicParameters, queryBuilder) = GetUpdateQuery(input);
-            var rowsAffected = await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction));
+            var rowsAffected = await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction, _commandTimeout));
             return rowsAffected > 0 ? rowsAffected : throw new DatabaseOperationFailedException(queryBuilder.ToString(), input);
         }
 
         public virtual async Task<int> InsertAsync(T input, IDbTransaction transaction)
         {
             var (dynamicParameters, queryBuilder) = GetInsertQuery(input);
-            var scopeIdentity = await _repository.ExecuteScalarAsync(transaction.Connection, new CommandDefinition(queryBuilder.AppendLine(" SELECT SCOPE_IDENTITY() ").ToString(), dynamicParameters, transaction));
+            var scopeIdentity = await _repository.ExecuteScalarAsync(transaction.Connection, new CommandDefinition(queryBuilder.AppendLine(" SELECT SCOPE_IDENTITY() ").ToString(), dynamicParameters, transaction, _commandTimeout));
             if (scopeIdentity <= 0)
             {
                 throw new DatabaseOperationFailedException(queryBuilder.ToString(), input);
