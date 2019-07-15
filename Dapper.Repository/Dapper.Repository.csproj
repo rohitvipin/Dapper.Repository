@@ -11,6 +11,8 @@
     <PackageId>Dapper.CRUD.Repository</PackageId>
     <Product>Dapper.CRUD.Repository</Product>
     <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
+    <FileVersion>1.0.3.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
