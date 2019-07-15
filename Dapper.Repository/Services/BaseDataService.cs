@@ -181,6 +181,21 @@ namespace Dapper.Repository.Services
             }
         }
 
+        public virtual async Task<IEnumerable<T>> GetByIdAsync(IList<int> ids)
+        {
+            using (var connection = _connectionFactory.GetConnection())
+            {
+                var queryBuilder = GetSelectQueryBuilder();
+
+                var paramName = $"{CurrentType.Value.Name}_PK_Ids";
+                queryBuilder.AppendLine($" WHERE [{CurrentType.Value.Name}].[{nameof(BaseModel.Id)}] IN @{paramName} ");
+                var dynamicParameters = new DynamicParameters();
+                dynamicParameters.Add(paramName, ids);
+
+                return await _repository.QueryAsync(connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, commandTimeout: _commandTimeout));
+            }
+        }
+
         public virtual async Task<int> UpdateAsync(T input)
         {
             using (var connection = _connectionFactory.GetConnection())
