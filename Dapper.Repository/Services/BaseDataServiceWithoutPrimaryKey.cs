@@ -117,7 +117,7 @@ namespace Dapper.Repository.Services
             return segmentSize;
         }
 
-        private async Task BulkUpdateAsync(IList<T> inputs, IDbTransaction transaction)
+        private async Task<int> BulkUpdateAsync(IList<T> inputs, IDbTransaction transaction)
         {
             var queryBuilder = new StringBuilder();
             var dynamicParameters = new DynamicParameters();
@@ -128,10 +128,10 @@ namespace Dapper.Repository.Services
                 GetUpdateQuery(item, queryBuilder, dynamicParameters, index.ToString());
             }
 
-            await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction, _commandTimeout));
+            return await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction, _commandTimeout));
         }
 
-        private async Task BulkInsertAsync(IList<T> inputs, IDbTransaction transaction)
+        private async Task<int> BulkInsertAsync(IList<T> inputs, IDbTransaction transaction)
         {
             var queryBuilder = new StringBuilder();
             var dynamicParameters = new DynamicParameters();
@@ -141,7 +141,7 @@ namespace Dapper.Repository.Services
                 GetInsertQuery(inputs[index], queryBuilder, dynamicParameters, index.ToString());
             }
 
-            await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction, _commandTimeout));
+            return await _repository.ExecuteAsync(transaction.Connection, new CommandDefinition(queryBuilder.ToString(), dynamicParameters, transaction, _commandTimeout));
         }
 
         protected static StringBuilder GetSelectQueryBuilder()
@@ -187,14 +187,14 @@ namespace Dapper.Repository.Services
 
                 using (var transaction = connection.BeginTransaction())
                 {
-                    var id = await InsertAsync(input, transaction);
+                    var rowsInserted = await InsertAsync(input, transaction);
                     transaction.Commit();
-                    return id;
+                    return rowsInserted;
                 }
             }
         }
 
-        public virtual async Task UpdateAsync(IList<T> inputs)
+        public virtual async Task<int> UpdateAsync(IList<T> inputs)
         {
             using (var connection = _connectionFactory.GetConnection())
             {
@@ -202,13 +202,14 @@ namespace Dapper.Repository.Services
 
                 using (var transaction = connection.BeginTransaction())
                 {
-                    await UpdateAsync(inputs, transaction);
+                    var rowsAffected = await UpdateAsync(inputs, transaction);
                     transaction.Commit();
+                    return rowsAffected;
                 }
             }
         }
 
-        public virtual async Task InsertAsync(IList<T> inputs)
+        public virtual async Task<int> InsertAsync(IList<T> inputs)
         {
             using (var connection = _connectionFactory.GetConnection())
             {
@@ -216,8 +217,9 @@ namespace Dapper.Repository.Services
 
                 using (var transaction = connection.BeginTransaction())
                 {
-                    await InsertAsync(inputs, transaction);
+                    var rowsAffected = await InsertAsync(inputs, transaction);
                     transaction.Commit();
+                    return rowsAffected;
                 }
             }
         }
@@ -241,24 +243,30 @@ namespace Dapper.Repository.Services
             return rowsInserted;
         }
 
-        public virtual async Task UpdateAsync(IList<T> inputs, IDbTransaction transaction)
+        public virtual async Task<int> UpdateAsync(IList<T> inputs, IDbTransaction transaction)
         {
             var inputArray = inputs as T[] ?? inputs.ToArray();
+            var rowsAffected = 0;
 
             foreach (var input in inputArray.Slice(GetBatchSize(inputArray)))
             {
-                await BulkUpdateAsync(input, transaction);
+                rowsAffected += await BulkUpdateAsync(input, transaction);
             }
+
+            return rowsAffected;
         }
 
-        public virtual async Task InsertAsync(IList<T> inputs, IDbTransaction transaction)
+        public virtual async Task<int> InsertAsync(IList<T> inputs, IDbTransaction transaction)
         {
             var inputArray = inputs as T[] ?? inputs.ToArray();
+            var rowsAffected = 0;
 
             foreach (var input in inputArray.Slice(GetBatchSize(inputArray)))
             {
-                await BulkInsertAsync(input, transaction);
+                rowsAffected += await BulkInsertAsync(input, transaction);
             }
+
+            return rowsAffected;
         }
     }
 }

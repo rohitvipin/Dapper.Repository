@@ -26,14 +26,14 @@ namespace Dapper.Repository.Services.Interfaces
         /// </summary>
         /// <param name="inputs">Objects to be updated</param>
         /// <returns></returns>
-        Task UpdateAsync(IList<T> inputs);
+        Task<int> UpdateAsync(IList<T> inputs);
 
         /// <summary>
         /// Inserts a list of objects
         /// </summary>
         /// <param name="inputs">Objects to be inserted</param>
         /// <returns></returns>
-        Task InsertAsync(IList<T> inputs);
+        Task<int> InsertAsync(IList<T> inputs);
 
         /// <summary>
         /// Updates the given record into the database
@@ -57,7 +57,7 @@ namespace Dapper.Repository.Services.Interfaces
         /// <param name="inputs">Objects to be updated</param>
         /// <param name="transaction">Transaction to be used, if null creates a new connection and transaction</param>
         /// <returns></returns>
-        Task UpdateAsync(IList<T> inputs, IDbTransaction transaction);
+        Task<int> UpdateAsync(IList<T> inputs, IDbTransaction transaction);
 
         /// <summary>
         /// Inserts a list of objects
@@ -65,6 +65,6 @@ namespace Dapper.Repository.Services.Interfaces
         /// <param name="inputs">Objects to be inserted</param>
         /// <param name="transaction">Transaction to be used, if null creates a new connection and transaction</param>
         /// <returns></returns>
-        Task InsertAsync(IList<T> inputs, IDbTransaction transaction);
+        Task<int> InsertAsync(IList<T> inputs, IDbTransaction transaction);
     }
 }
