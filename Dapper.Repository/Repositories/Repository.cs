@@ -2,7 +2,6 @@
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Dapper.Repository.Models;
 using Dapper.Repository.Repositories.Interfaces;
 
 namespace Dapper.Repository.Repositories
@@ -15,7 +14,7 @@ namespace Dapper.Repository.Repositories
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [ExcludeFromCodeCoverage]
-    public class Repository<T> : IRepository<T> where T : BaseModel
+    public class Repository<T> : IRepository<T> where T : class
     {
         /// <inheritdoc />
         public virtual async Task<T> GetSingleAsync(IDbConnection connection, CommandDefinition commandDefinition) => await connection.QuerySingleAsync<T>(commandDefinition);

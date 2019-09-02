@@ -5,22 +5,8 @@ using Dapper.Repository.Models;
 
 namespace Dapper.Repository.Services.Interfaces
 {
-    public interface IDataService<T> where T : BaseModel
+    public interface IDataServiceWithCompositePrimaryKey<T> where T : BaseModelWithCompositePrimaryKey
     {
-        /// <summary>
-        /// Gets the requested type by Id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Object of specified type</returns>
-        Task<T> GetByIdAsync(int id);
-
-        /// <summary>
-        /// Gets all the requested type by Ids
-        /// </summary>
-        /// <param name="ids"></param>
-        /// <returns></returns>
-        Task<IEnumerable<T>> GetByIdAsync(IList<int> ids);
-
         /// <summary>
         /// Updates the given record into the database
         /// </summary>
@@ -32,7 +18,7 @@ namespace Dapper.Repository.Services.Interfaces
         /// Inserts the given record into the table
         /// </summary>
         /// <param name="input">Object to be inserted</param>
-        /// <returns>Primary key</returns>
+        /// <returns>Number of records inserted</returns>
         Task<int> InsertAsync(T input);
 
         /// <summary>
@@ -62,7 +48,7 @@ namespace Dapper.Repository.Services.Interfaces
         /// </summary>
         /// <param name="input">Object to be inserted</param>
         /// <param name="transaction">Transaction to be used, if null creates a new connection and transaction</param>
-        /// <returns>Primary key</returns>
+        /// <returns>Number of records inserted</returns>
         Task<int> InsertAsync(T input, IDbTransaction transaction);
 
         /// <summary>

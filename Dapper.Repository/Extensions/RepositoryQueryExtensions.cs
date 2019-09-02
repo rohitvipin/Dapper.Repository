@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Dapper.Repository.Models;
 using Dapper.Repository.Repositories.Interfaces;
 
 namespace Dapper.Repository.Extensions
@@ -20,7 +19,7 @@ namespace Dapper.Repository.Extensions
         /// <param name="connection"></param>
         /// <param name="commandDefinition"></param>
         /// <returns></returns>
-        public static async Task<T> QuerySingleAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : BaseModel
+        public static async Task<T> QuerySingleAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : class
             => await repository.GetSingleAsync(connection, commandDefinition);
 
         /// <summary>
@@ -32,7 +31,7 @@ namespace Dapper.Repository.Extensions
         /// <param name="connection"></param>
         /// <param name="commandDefinition"></param>
         /// <returns></returns>
-        public static async Task<T> QuerySingleOrDefaultAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : BaseModel
+        public static async Task<T> QuerySingleOrDefaultAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : class
             => await repository.GetSingleOrDefaultAsync(connection, commandDefinition);
 
         /// <summary>
@@ -43,7 +42,7 @@ namespace Dapper.Repository.Extensions
         /// <param name="connection"></param>
         /// <param name="commandDefinition"></param>
         /// <returns></returns>
-        public static async Task<IEnumerable<T>> QueryAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : BaseModel
+        public static async Task<IEnumerable<T>> QueryAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : class
             => await repository.GetAsync(connection, commandDefinition);
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace Dapper.Repository.Extensions
         /// <param name="connection"></param>
         /// <param name="commandDefinition"></param>
         /// <returns></returns>
-        public static async Task<int> ExecuteAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : BaseModel
+        public static async Task<int> ExecuteAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : class
             => await repository.ExecuteCommandAsync(connection, commandDefinition);
 
         /// <summary>
@@ -65,7 +64,7 @@ namespace Dapper.Repository.Extensions
         /// <param name="connection"></param>
         /// <param name="commandDefinition"></param>
         /// <returns></returns>
-        public static async Task<int> ExecuteScalarAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : BaseModel
+        public static async Task<int> ExecuteScalarAsync<T>(this IRepository<T> repository, IDbConnection connection, CommandDefinition commandDefinition) where T : class
             => await repository.GetScalarResultAsync(connection, commandDefinition);
     }
 }

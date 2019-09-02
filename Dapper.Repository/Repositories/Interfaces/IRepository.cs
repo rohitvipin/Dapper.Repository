@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
-using Dapper.Repository.Models;
 
 namespace Dapper.Repository.Repositories.Interfaces
 {
@@ -9,7 +8,7 @@ namespace Dapper.Repository.Repositories.Interfaces
     /// Base interface for any repository
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IRepository<T> where T : BaseModel
+    public interface IRepository<T> where T : class
     {
         /// <summary>
         /// Gets a single record.
