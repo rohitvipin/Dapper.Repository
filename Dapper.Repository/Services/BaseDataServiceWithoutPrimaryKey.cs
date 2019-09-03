@@ -31,7 +31,7 @@ namespace Dapper.Repository.Services
             _commandTimeout = commandTimeout;
         }
 
-        private (DynamicParameters dynamicParameters, StringBuilder queryBuilder) GetUpdateQuery(T input, StringBuilder queryBuilder = null, DynamicParameters dynamicParameters = null, string offset = null)
+        private (DynamicParameters DynamicParameters, StringBuilder QueryBuilder) GetUpdateQuery(T input, StringBuilder queryBuilder = null, DynamicParameters dynamicParameters = null, string offset = null)
         {
             var propertyInfos = PublicPropertyInfo.Value.ToArray();
             if (dynamicParameters == null)
