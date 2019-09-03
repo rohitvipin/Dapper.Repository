@@ -62,10 +62,10 @@ namespace Dapper.Repository.Services
 
             queryBuilder.AppendLine($" FROM [{CurrentType.Value.Name}]");
 
-            return AddWhereConditions(dynamicParameters, queryBuilder);
+            return AddWhereConditions(dynamicParameters, queryBuilder, input, offset);
         }
 
-        protected abstract (DynamicParameters dynamicParameters, StringBuilder queryBuilder) AddWhereConditions(DynamicParameters dynamicParameters, StringBuilder queryBuilder);
+        protected abstract (DynamicParameters dynamicParameters, StringBuilder queryBuilder) AddWhereConditions(DynamicParameters dynamicParameters, StringBuilder queryBuilder, T input, string offset);
 
         private static (DynamicParameters, StringBuilder) GetInsertQuery(T input, StringBuilder queryBuilder = null, DynamicParameters dynamicParameters = null, string offset = null)
         {
