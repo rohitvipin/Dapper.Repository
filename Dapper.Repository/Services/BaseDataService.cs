@@ -60,8 +60,6 @@ namespace Dapper.Repository.Services
                 dynamicParameters.Add($"@{propertyInfo.Name}{offset}", propertyInfo.GetValue(input));
             }
 
-            queryBuilder.AppendLine($" FROM [{CurrentType.Value.Name}]");
-
             var paramName = $"{CurrentType.Value.Name}_PK_Id{offset}";
             queryBuilder.AppendLine($" WHERE [{nameof(BaseModel.Id)}] = @{paramName}")
                 .AppendLine();

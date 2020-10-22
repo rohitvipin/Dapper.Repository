@@ -31,7 +31,7 @@ namespace Dapper.Repository.Services
             _commandTimeout = commandTimeout;
         }
 
-        private (DynamicParameters dynamicParameters, StringBuilder queryBuilder) GetUpdateQuery(T input, StringBuilder queryBuilder = null, DynamicParameters dynamicParameters = null, string offset = null)
+        private (DynamicParameters DynamicParameters, StringBuilder QueryBuilder) GetUpdateQuery(T input, StringBuilder queryBuilder = null, DynamicParameters dynamicParameters = null, string offset = null)
         {
             var propertyInfos = PublicPropertyInfo.Value.ToArray();
             if (dynamicParameters == null)
@@ -59,8 +59,6 @@ namespace Dapper.Repository.Services
                 queryBuilder.AppendLine($"[{propertyInfo.Name}] = @{propertyInfo.Name}{offset}");
                 dynamicParameters.Add($"@{propertyInfo.Name}{offset}", propertyInfo.GetValue(input));
             }
-
-            queryBuilder.AppendLine($" FROM [{CurrentType.Value.Name}]");
 
             return AddWhereConditions(dynamicParameters, queryBuilder, input, offset);
         }
